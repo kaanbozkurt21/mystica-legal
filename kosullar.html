@@ -1,0 +1,369 @@
+<title>Mystica Koşullar</title>
+<script>
+  // `text-transform: uppercase` picks its casing rules from the document's language,
+  // and this page is wrapped in a skeleton whose <html> element it does not author. Left
+  // unset, every section label came out with a dotless capital — "HESAP DIYE BIR ŞEY YOK"
+  // instead of "DİYE" and "BİR". Same bug as `uppercased(with: .current)` in the app and
+  // as `\b` in the fact-checker: a default that is invisible until the language is
+  // Turkish.
+  document.documentElement.lang = "tr";
+</script>
+<style>
+  /* ── The plate ──────────────────────────────────────────────────────────
+     Taken from `app/Mystica/DesignSystem/Ink.swift` rather than invented, so
+     the page and the app are printed with the same two inks. Committed to one
+     visual world on purpose — this is Mystica's own sheet, and the app has no
+     light mode to match. Every colour is painted explicitly, so the page holds
+     whatever ground the host puts behind it.                                  */
+  :root {
+    --stock:        #17101B;  /* aubergine black — the paper */
+    --stock-raised: #1F1526;
+    --stock-wine:   #2A1A26;
+    --paper:        #E9DFC8;  /* bone */
+    --paper-shade:  #D8CBAF;
+    --ink1:         #FFA51E;  /* marigold — plate 1 */
+    --ink2:         #12E0C0;  /* acid teal — plate 2, used under 5% */
+    --hairline:     rgba(233, 223, 200, 0.22);
+
+    --display: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --body:    ui-serif, Charter, Georgia, "Times New Roman", serif;
+    --label:   ui-sans-serif, system-ui, "Helvetica Neue", sans-serif;
+
+    --measure: 34rem;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--stock);
+    color: var(--paper);
+    font-family: var(--body);
+    font-size: 1.0625rem;
+    line-height: 1.62;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .sheet {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 1.25rem 6rem;
+  }
+
+  /* ── Running head ─────────────────────────────────────────────────────
+     The app's `PressSlug`: a label on the left, a folio on the right, a rule
+     under both.                                                              */
+  .slug {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1.75rem 0 0.6rem;
+    border-bottom: 1px solid var(--hairline);
+    font-family: var(--label);
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink1);
+  }
+  .slug .folio { color: var(--paper-shade); opacity: 0.6; }
+  .slug a { color: var(--paper-shade); opacity: 0.75; text-decoration: none; }
+  .slug a:hover, .slug a:focus-visible { color: var(--ink2); opacity: 1; }
+
+  h1 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(2.75rem, 12vw, 4.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+    margin: 2.5rem 0 0;
+    color: var(--ink1);
+    /* The second plate, slightly out of registration. One flourish, once. */
+    text-shadow: 0.055em 0.055em 0 var(--ink2);
+  }
+
+  .standfirst {
+    margin: 1.5rem 0 0;
+    font-size: 1.1875rem;
+    line-height: 1.5;
+    color: var(--paper);
+  }
+
+  h2 {
+    font-family: var(--label);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink1);
+    margin: 3.5rem 0 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  h3 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.0625rem;
+    letter-spacing: -0.005em;
+    margin: 2rem 0 0;
+    color: var(--paper);
+  }
+
+  p, ul { margin: 0.9rem 0 0; }
+  ul { padding-left: 1.1rem; }
+  li { margin-top: 0.55rem; }
+  li::marker { color: var(--ink1); }
+
+  strong { color: var(--paper); font-weight: 700; }
+  em { color: var(--paper-shade); }
+
+  a { color: var(--ink2); text-underline-offset: 0.18em; }
+  a:focus-visible {
+    outline: 2px solid var(--ink2);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.85em;
+    color: var(--paper-shade);
+    background: var(--stock-raised);
+    padding: 0.1em 0.35em;
+    border-radius: 2px;
+  }
+
+  /* A pasted block: the one place the bone stock is the ground, as in the app. */
+  .pasted {
+    margin: 2rem 0 0;
+    padding: 1.15rem 1.25rem;
+    background: var(--stock-raised);
+    border-left: 3px solid var(--ink1);
+    border-radius: 2px;
+  }
+  .pasted p:first-child { margin-top: 0; }
+
+  .note {
+    margin: 2rem 0 0;
+    padding: 1.15rem 1.25rem;
+    background: var(--stock-wine);
+    border-radius: 2px;
+    font-size: 0.9375rem;
+    color: var(--paper-shade);
+  }
+  .note p:first-child { margin-top: 0; }
+  .note strong { color: var(--ink1); }
+
+  mark {
+    background: var(--ink1);
+    color: var(--stock);
+    font-family: var(--label);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 0.15em 0.4em;
+    border-radius: 2px;
+  }
+
+  .disclaimer {
+    margin-top: 4.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--hairline);
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--label);
+    font-size: 0.625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--paper-shade);
+    opacity: 0.55;
+  }
+
+  /* ── Printed ──────────────────────────────────────────────────────────
+     A privacy policy gets read by a lawyer, and a lawyer prints things. Two
+     fluoro inks on aubergine black is not a thing a printer can do, so on
+     paper it becomes what it is: a document.                                  */
+  @media print {
+    body { background: #fff; color: #111; font-size: 11pt; }
+    .sheet { max-width: none; padding: 0; }
+    h1 { color: #111; text-shadow: none; font-size: 28pt; }
+    h2 { color: #111; border-color: #999; }
+    h3 { color: #111; }
+    .slug { color: #444; border-color: #999; }
+    .pasted, .note { background: #f4f4f4; color: #111; border-left-color: #999; }
+    .note strong { color: #111; }
+    a { color: #111; }
+    .disclaimer { color: #666; opacity: 1; }
+    mark { background: #ffe9a8; color: #111; }
+  }
+</style>
+
+<div class="sheet">
+  <div class="slug">
+    <span>Mystica Press — Koşullar</span>
+    <span class="folio"><a href="terms.html">EN</a> · 21 · 08 · 26</span>
+  </div>
+
+  <h1>Koşullar</h1>
+
+  <p class="standfirst">
+    Ne satın aldığın, ters giderse ne olduğu, ve Mystica'nın ne <em>olmadığı</em>.
+    <a href="gizlilik.html">Gizlilik politikası</a> gibi, koddan yazıldı.
+  </p>
+
+  <div class="note">
+    <p>
+      <strong>Taslak, hukuki inceleme bekliyor.</strong> Aşağıdaki ticari koşullar
+      21 Ağustos 2026'da uygulamadan ve veritabanından okundu; doğrular. Eksik olan,
+      etraflarındaki hukuki çerçeve: Mystica'yı tüzel kişi olarak kimin sunduğu ve hangi
+      ülkenin hukukunun uygulanacağı. Onlar makul bir şeyle doldurulmak yerine ait
+      oldukları yerde işaretlendi.
+    </p>
+  </div>
+
+  <h2>Mystica eğlencedir</h2>
+
+  <p>
+    En önemli madde bu, o yüzden başta. Mystica astroloji, tarot, kahve telvesi, el ve
+    rüyalardan fal yazar. <strong>Eğlence içindir.</strong> Her fal ekranı bunu yazar, bu
+    sayfa da yazıyor.
+  </p>
+
+  <p>
+    Tıbbi, hukuki, mali ya da psikolojik tavsiye değildir ve içindeki hiçbir şey olayların
+    önceden bildirilmesi değildir. Bir fal öyle dedi diye, normalde vermeyeceğin bir kararı
+    verme. Uygulama kendisinin en kötü hâlini reddetmek üzere kuruldu — ölüm, hastalık ya
+    da felaket söylemez, birini terk etmeni öğütlemez — ama bu bir tasarım kısıtıdır, senin
+    kendi muhakemenin yerine geçmez.
+  </p>
+
+  <p>
+    <strong>Kriz hattı değildir.</strong> Tehlikede olduğunu düşündüren bir şey yazarsan
+    Mystica falcı olmayı bırakır ve bunu açıkça söyler. Yapabileceğinin en fazlası budur.
+    Başın dertteyse, yardım edebilecek bir insanla konuş.
+  </p>
+
+  <h2>Ücretsiz olanlar</h2>
+
+  <ul>
+    <li><strong>Günlük burç yorumun</strong> — burcundan değil, kendi doğum haritandan yazılır.</li>
+    <li><strong>Günün kartı.</strong></li>
+    <li><strong>Haftada bir uzun fal</strong> — fincan, el ya da rüya.</li>
+  </ul>
+
+  <p>Bunlar ücretsiz kalır. Abonelik <em>ne sıklıkta</em> olduğunu değiştirir, olup olmadığını değil.</p>
+
+  <h2>Abonelik</h2>
+
+  <p>
+    <strong>Yılda 49,99 $</strong> ya da <strong>haftada 7,99 $</strong>, üstelik
+    <strong>3 gün ücretsiz deneme</strong> ile. Sen iptal edene kadar kendiliğinden
+    yenilenir ve Apple Hesabından tahsil edilir.
+    <em>Ayarlar › Apple Hesabın › Abonelikler</em> üzerinden istediğin zaman iptal
+    edebilirsin; deneme sürerken iptal edersen hiçbir ücret ödemezsin. Dönem bitmeden en az
+    24 saat önce iptal et, yoksa bir sonraki dönem tahsil edilir.
+  </p>
+
+  <p>
+    Abonelik sana haftada bir yerine her gün uzun bir fal, doğum haritanın tamamını,
+    beklemesiz teslim ve <strong>ayda 10 kredi</strong> verir. Krediler birikir —
+    kullanılmayan ay boşa gitmez.
+  </p>
+
+  <h2>Krediler</h2>
+
+  <p>
+    Krediler, Kelt Haçı gibi ek ücretli şeyleri açar. Paket hâlinde satılır — 5 tanesi
+    2,99 $, 12 tanesi 5,99 $, 30 tanesi 12,99 $ — ve tek seferlik alışveriştir:
+    <strong>hiçbir şey yenilenmez, hiçbir şey iptal edilmez.</strong>
+  </p>
+
+  <p>
+    Her veriliş ve her harcama, yalnızca üzerine eklenen bir deftere yazılır; böylece
+    tartışmalı bir bakiye satır satır açıklanabilir. Krediler kendiliğinden geçersiz olmaz.
+  </p>
+
+  <div class="pasted">
+    <p>
+      <strong>Hesabını silmek harcanmamış kredileri yok eder.</strong> Gerçek parayla
+      alındılar ve geri yükleneceği bir hesap kalmıyor — Mystica'da giriş diye bir şey
+      olmadığı için desteğin bulabileceği bir şey de yok. Uygulama bunu dokunmadan önce
+      söylüyor, ve burada da tekrarlanıyor çünkü birini en çok şaşırtabilecek madde bu.
+    </p>
+  </div>
+
+  <h2>Fal gelmezse</h2>
+
+  <p>
+    Mystica senden bir kredi alır da falı üretemezse, o tahsilat geri alınır. Bu iyi
+    niyete bırakılmadı, veritabanına yazıldı.
+  </p>
+
+  <p>
+    Fincan ve el falı bilerek bir bekleme sonrası teslim edilir — sen bakarken üretilmiyor,
+    okunuyor. Beklemeden çıkmayı bir krediyle satın alabilirsin. O kredi <em>süreyi</em>
+    satın alır, daha iyi bir fal değil; uygulama bunu harcadığın ekranda söylüyor.
+  </p>
+
+  <h2>İadeler</h2>
+
+  <p>
+    Satın almalar App Store üzerinden geçer, yani iade Apple'ın vereceği ve Apple'ın
+    süreciyle yürüyen bir şeydir.
+  </p>
+
+  <p>
+    Mystica bir fala harcanmış krediyi iade ettiğinde ise <strong>fal geçersiz kılınır</strong>
+    — hem falı hem krediyi birden tutmazsın. Bu bilerek böyle ve burada bir iadenin
+    aldığı tek şekil budur.
+  </p>
+
+  <h2>Yazdıkların</h2>
+
+  <p>
+    Açılımdan önceki soru ve defterdeki rüya senindir. Mystica onları falı yazmak için
+    saklar, 30 gün sonra siler ve falı tutar.
+    <a href="gizlilik.html">Gizlilik politikası</a> bunu tam olarak anlatıyor.
+  </p>
+
+  <p>
+    Bu alanları hukuka aykırı bir şey göndermek için kullanma, ve Mystica'yı başkasına
+    istemediği bir fal çıkarmak için kullanma.
+  </p>
+
+  <h2>Değişiklikler</h2>
+
+  <p>
+    Bu koşullar, ödediğin şeyi etkileyecek biçimde değişirse, o değişiklik geriye dönük
+    değil bir sonraki yenilemeden itibaren geçerli olur. Sayfanın başındaki tarih, en son
+    ne zaman değiştiğidir.
+  </p>
+
+  <h2>Mystica'yı kim sunuyor, ve hangi hukuk</h2>
+
+  <p>
+    <mark>SAYFA YAYINA ÇIKMADAN ÖNCE DOLDURULACAK.</mark>
+  </p>
+
+  <p>
+    Bir koşullar sayfasının, uygulamanın arkasındaki tüzel kişiyi ve sözleşmeye
+    uygulanacak hukuku adıyla söylemesi gerekir. İkisi de bu projede henüz yok; makul bir
+    şirket adı ve makul bir yargı yeri yazmak, zaten avukatın olduğu iki şeyi uydurmak
+    olurdu.
+  </p>
+
+  <h2>İletişim</h2>
+
+  <p>
+    <mark>DOLDURULACAK.</mark> Gizlilik sayfasındakiyle aynı boşluk, aynı sebeple: geri
+    dönen bir adres, görünür bir boşluktan kötüdür.
+  </p>
+
+  <div class="disclaimer">
+    <span>Yalnızca eğlence amaçlıdır</span>
+    <span>Taslak · 21 · 08 · 26</span>
+  </div>
+</div>
