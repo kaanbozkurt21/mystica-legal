@@ -1,0 +1,492 @@
+<title>Mystica Gizlilik</title>
+<script>
+  // `text-transform: uppercase` picks its casing rules from the document's language,
+  // and this page is wrapped in a skeleton whose <html> element it does not author. Left
+  // unset, every section label came out with a dotless capital — "HESAP DIYE BIR ŞEY YOK"
+  // instead of "DİYE" and "BİR". Same bug as `uppercased(with: .current)` in the app and
+  // as `\b` in the fact-checker: a default that is invisible until the language is
+  // Turkish.
+  document.documentElement.lang = "tr";
+</script>
+<style>
+  /* ── The plate ──────────────────────────────────────────────────────────
+     Taken from `app/Mystica/DesignSystem/Ink.swift` rather than invented, so
+     the page and the app are printed with the same two inks. Committed to one
+     visual world on purpose — this is Mystica's own sheet, and the app has no
+     light mode to match. Every colour is painted explicitly, so the page holds
+     whatever ground the host puts behind it.                                  */
+  :root {
+    --stock:        #17101B;  /* aubergine black — the paper */
+    --stock-raised: #1F1526;
+    --stock-wine:   #2A1A26;
+    --paper:        #E9DFC8;  /* bone */
+    --paper-shade:  #D8CBAF;
+    --ink1:         #FFA51E;  /* marigold — plate 1 */
+    --ink2:         #12E0C0;  /* acid teal — plate 2, used under 5% */
+    --hairline:     rgba(233, 223, 200, 0.22);
+
+    --display: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --body:    ui-serif, Charter, Georgia, "Times New Roman", serif;
+    --label:   ui-sans-serif, system-ui, "Helvetica Neue", sans-serif;
+
+    --measure: 34rem;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--stock);
+    color: var(--paper);
+    font-family: var(--body);
+    font-size: 1.0625rem;
+    line-height: 1.62;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .sheet {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 1.25rem 6rem;
+  }
+
+  /* ── Running head ─────────────────────────────────────────────────────
+     The app's `PressSlug`: a label on the left, a folio on the right, a rule
+     under both.                                                              */
+  .slug {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1.75rem 0 0.6rem;
+    border-bottom: 1px solid var(--hairline);
+    font-family: var(--label);
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink1);
+  }
+  .slug .folio { color: var(--paper-shade); opacity: 0.6; }
+  .slug a { color: var(--paper-shade); opacity: 0.75; text-decoration: none; }
+  .slug a:hover, .slug a:focus-visible { color: var(--ink2); opacity: 1; }
+
+  h1 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(2.75rem, 12vw, 4.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+    margin: 2.5rem 0 0;
+    color: var(--ink1);
+    /* The second plate, slightly out of registration. One flourish, once. */
+    text-shadow: 0.055em 0.055em 0 var(--ink2);
+  }
+
+  .standfirst {
+    margin: 1.5rem 0 0;
+    font-size: 1.1875rem;
+    line-height: 1.5;
+    color: var(--paper);
+  }
+
+  h2 {
+    font-family: var(--label);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink1);
+    margin: 3.5rem 0 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  h3 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.0625rem;
+    letter-spacing: -0.005em;
+    margin: 2rem 0 0;
+    color: var(--paper);
+  }
+
+  p, ul { margin: 0.9rem 0 0; }
+  ul { padding-left: 1.1rem; }
+  li { margin-top: 0.55rem; }
+  li::marker { color: var(--ink1); }
+
+  strong { color: var(--paper); font-weight: 700; }
+  em { color: var(--paper-shade); }
+
+  a { color: var(--ink2); text-underline-offset: 0.18em; }
+  a:focus-visible {
+    outline: 2px solid var(--ink2);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.85em;
+    color: var(--paper-shade);
+    background: var(--stock-raised);
+    padding: 0.1em 0.35em;
+    border-radius: 2px;
+  }
+
+  /* A pasted block: the one place the bone stock is the ground, as in the app. */
+  .pasted {
+    margin: 2rem 0 0;
+    padding: 1.15rem 1.25rem;
+    background: var(--stock-raised);
+    border-left: 3px solid var(--ink1);
+    border-radius: 2px;
+  }
+  .pasted p:first-child { margin-top: 0; }
+
+  .note {
+    margin: 2rem 0 0;
+    padding: 1.15rem 1.25rem;
+    background: var(--stock-wine);
+    border-radius: 2px;
+    font-size: 0.9375rem;
+    color: var(--paper-shade);
+  }
+  .note p:first-child { margin-top: 0; }
+  .note strong { color: var(--ink1); }
+
+  mark {
+    background: var(--ink1);
+    color: var(--stock);
+    font-family: var(--label);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 0.15em 0.4em;
+    border-radius: 2px;
+  }
+
+  .disclaimer {
+    margin-top: 4.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--hairline);
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--label);
+    font-size: 0.625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--paper-shade);
+    opacity: 0.55;
+  }
+
+  /* ── Printed ──────────────────────────────────────────────────────────
+     A privacy policy gets read by a lawyer, and a lawyer prints things. Two
+     fluoro inks on aubergine black is not a thing a printer can do, so on
+     paper it becomes what it is: a document.                                  */
+  @media print {
+    body { background: #fff; color: #111; font-size: 11pt; }
+    .sheet { max-width: none; padding: 0; }
+    h1 { color: #111; text-shadow: none; font-size: 28pt; }
+    h2 { color: #111; border-color: #999; }
+    h3 { color: #111; }
+    .slug { color: #444; border-color: #999; }
+    .pasted, .note { background: #f4f4f4; color: #111; border-left-color: #999; }
+    .note strong { color: #111; }
+    a { color: #111; }
+    .disclaimer { color: #666; opacity: 1; }
+    mark { background: #ffe9a8; color: #111; }
+  }
+</style>
+
+<div class="sheet">
+  <div class="slug">
+    <span>Mystica Press — Verilerin</span>
+    <span class="folio"><a href="/privacy">EN</a> · 21 · 08 · 26</span>
+  </div>
+
+  <h1>Gizlilik</h1>
+
+  <p class="standfirst">
+    Mystica'nın ona verdiğin şeylerle ne yaptığı — niyetten değil, koddan yazıldı.
+    Bir yer tuhafsa, kendi lehine yuvarlamak yerine tuhaf olduğunu söylüyor.
+  </p>
+
+  <div class="note">
+    <p>
+      <strong>Taslak, hukuki inceleme bekliyor.</strong> Aşağıdaki her olgusal iddia
+      21 Ağustos 2026'da kaynak koda ve canlı veritabanına karşı denetlendi, ama bu belgeyi
+      henüz bir avukat okumadı. Okunabilsin diye ve uygulamadaki bağlantı bir alan parkı
+      yerine doğru bir şeye gitsin diye yayımlandı.
+    </p>
+    <p>
+      <strong>KVKK ayrıca not ister.</strong> Bu sayfa dürüst bir envanter olarak yazıldı,
+      bir uyum belgesi olarak değil. 6698 sayılı kanun bunun üstüne belirli unsurlar arar:
+      veri sorumlusunun kimliği, toplama yöntemi ve hukuki sebep, ve Madde 11'deki
+      haklarının tek tek sayılması. Onlar burada <em>yok</em>, ve uydurulmaları doğru
+      olmazdı — avukatın ilk soracağı şey bu olacak.
+    </p>
+  </div>
+
+  <h2>Hesap diye bir şey yok</h2>
+
+  <p>
+    Mystica senden e-posta, parola ya da telefon numarası istemez; giriş ekranı yoktur.
+    İlk açılışta uygulama anonim olarak oturum açar ve kendisine rastgele bir kimlik verilir.
+    Fallarının ve kredi defterinin bağlı olduğu şey o kimliktir.
+  </p>
+
+  <p>
+    Tek bir yerde durur: cihazın Anahtar Zinciri'nde, iCloud'a <strong>eşitlenmeyecek</strong>
+    şekilde işaretli ve telefon yeniden başladıktan sonra bir kez kilidi açılmadan okunamaz
+    hâlde.
+  </p>
+
+  <h3>Uygulamayı silmek hesabını silmez</h3>
+
+  <p>
+    iOS, bir uygulama kaldırıldığında Anahtar Zinciri kayıtlarını yerinde bırakır; yani
+    jeton kaldırmayı atlatır ve yeniden kurduğunda aynı hesap kaldığı yerden devam eder.
+    Bu varsayılmadı, denendi: uygulama silindi, yeniden kuruldu, sorular baştan yanıtlandı
+    ve o gün zaten verilmiş olan falın aynısı geri geldi — ki bu ancak sunucu açısından aynı
+    kişiysen mümkündür.
+  </p>
+
+  <p>Bunun iki yüzü var ve ikisini de açıkça söylemek gerek.</p>
+
+  <ul>
+    <li><strong>Kredilerin durur.</strong> Uygulamayı sil, sonra yeniden kur — ödediğin şey hâlâ orada.</li>
+    <li><strong>Geri kalan her şey de durur.</strong> Uygulamayı Mystica'dan kurtulmak için siliyorsan, kurtulmuş olmuyorsun. Falların ve defterin hâlâ sunucuda ve yeniden kurulan uygulama onlara erişebiliyor.</li>
+  </ul>
+
+  <p>
+    İstediğin şey gitmekse, uygulamayı silmeden önce <em>Verilerin</em> altındaki
+    <strong>Hesabımı sil</strong>'i kullan. O gerçek, ve aşağıda tam olarak anlatılıyor.
+  </p>
+
+  <h2>Telefonunda kalanlar</h2>
+
+  <h3>Fincan ve el fotoğrafların</h3>
+
+  <p>
+    Fal başına bir kare, uygulamanın kendi klasöründe tutulur, cihaz yedeklerinin dışında
+    bırakılır ve 30 gün sonra kendiliğinden silinir.
+  </p>
+
+  <p>
+    <strong>Gönderilirler</strong> — bir fal ancak öyle yazılır. Her fotoğraf Mystica'nın
+    sunucusuna gönderilir, aynı istek içinde modele iletilir ve iki uçta da saklanmaz. Onu
+    tutan bir tablo ya da bir kova yok. Telefonundaki kopya, herhangi bir yerde kalıcı olan
+    tek kopyadır.
+  </p>
+
+  <div class="pasted">
+    <p>
+      Bu belgenin ve uygulamadaki ekranın daha eski bir sürümü, fotoğrafların
+      <em>hiç yüklenmediğini</em> söylüyordu. Bu yanlıştı — ve önemli olan yönde yanlıştı:
+      gönderilip atılmak, hiç gönderilmemekle aynı şey değildir.
+    </p>
+  </div>
+
+  <h3>Adın, doğum bilgilerin ve yanıtların</h3>
+
+  <p>
+    Uygulamanın kendi klasöründe tek bir küçük dosyada tutulur, yedeklerin dışında bırakılır
+    ve telefon yeniden başladıktan sonra ilk kez kilidi açılana kadar okunamaz.
+    <strong>Seninle ilgili hiçbir şey Mystica'nın sunucusundaki bir tabloya girmez</strong> —
+    bunun için kurulmuş olan tablo silindi ve yerine yenisi konmadı.
+  </p>
+
+  <p>
+    Saklanan şey, yazdığın şeydir: adın, doğum günün, saatin ve yerin, bir de ilişki, odak,
+    ton ve zamirlerle ilgili yanıtların. Doğum anı, damga yerine girdiğin sayılar olarak
+    saklanır — yıl, ay, gün, saat, dakika — ki bir yıl sonra ve başka bir ülkede de aynı şeyi
+    anlatsın.
+  </p>
+
+  <p>
+    Gezegenlerin nerede olduğu hesaplanabilsin diye her falla birlikte
+    <strong>gönderilir</strong>, ve karşı tarafta saklanmaz. Uygulamayı silersen onunla
+    birlikte gider.
+  </p>
+
+  <h2>Mystica'nın sunucusunda duranlar</h2>
+
+  <p>Arka uç, AB'de (Frankfurt, <code>eu-central-1</code>) bir Supabase projesidir.</p>
+
+  <h3>Falların</h3>
+
+  <p>
+    Her falın metni, türü, çekilen kartlar ve tohumları, hangi dilde yazıldığı, ne zaman
+    teslim edildiği ve ne zaman açtığın. İçlerinde, çıkarım yapmak zorunda kalmak yerine
+    bilmen gereken iki şey var:
+  </p>
+
+  <ul>
+    <li>
+      <strong>Sorduğun soru</strong>, kendi kelimelerinle, tam yazdığın gibi — ve aynı şekilde
+      saklanan, yazdığın rüya.
+    </li>
+    <li>
+      <strong>Falın metninin içinde adın.</strong> Fallar sana seslenerek yazılır, yani model
+      adını metnin içine koyar ve o metin saklanır. Dolayısıyla adın sunucudadır — Mystica'nın
+      bir isim tablosu olmamasına ve senden hiç kayıt olmanı istememesine rağmen.
+    </li>
+  </ul>
+
+  <h3>Yazdıkların, ve ne zaman gittikleri</h3>
+
+  <p>
+    Rüya defteri buradaki her şeyden <em>türce</em> farklı. Doğum tarihi bir olgudur. Fotoğraf
+    fotoğraftır. Bir sabahın ilk on dakikasında yazılmış bir rüya ise Mystica'nın tuttuğu en
+    kişisel şeydir, ve aklına geleni yazabileceğin tek yerdir.
+  </p>
+
+  <p>
+    Fal ondan yazıldığı için sunucuda, falın kendisine bağlı olarak saklanır.
+    <strong>30 gün sonra silinir</strong> — fotoğraflarla aynı süre, iki sayı yerine bir sayı
+    olsun diye. Silme, birinin hatırlaması gereken bir kural olarak değil, veritabanında her
+    gece çalışan zamanlanmış bir iş olarak yapılır, ve tek yönlüdür.
+  </p>
+
+  <p>
+    <strong>Dürüst bir sınır.</strong> İyi bir fal seni kendi sözlerinle anar — burç yorumu
+    gibi okunmamasının başlıca sebebi budur — yani bir fal, yazdıklarının parçalarını
+    içerebilir ve o parçalar fal durduğu sürece durur. Onları silmek falı yok etmek olurdu,
+    ki saklanan şey faldır. İkisinin birden gitmesini istiyorsan, <em>Hesabımı sil</em> falları
+    da kaldırır.
+  </p>
+
+  <h3>Kredi defterin</h3>
+
+  <p>
+    Her satın alma ve her harcama, yalnızca üzerine eklenen bir liste hâlinde. Tartışmalı bir
+    bakiyenin satır satır açıklanabilmesi için vardır; bu da onun bilerek hiç yeniden
+    yazılmadığı anlamına gelir.
+  </p>
+
+  <h3>Sunucuda olmayanlar</h3>
+
+  <p>
+    Doğum tarihin, saatin, yerin ya da koordinatların. Fotoğrafların. E-postan — zaten hiç
+    istenmedi.
+  </p>
+
+  <h3>Kullanım olayları</h3>
+
+  <p>
+    Uygulama <code>reading_opened</code> gibi olaylar üretir. Bugün bunlar bir geliştirici
+    konsoluna yazdırılır ve <strong>hiçbir yere gönderilmez</strong>; bağlı bir analitik
+    servisi yoktur. Bir gün bağlanırsa, bu bölüm hangisi olduğunu, ne aldığını ve
+    kapatılabilir olup olmadığını söylemek zorundadır.
+  </p>
+
+  <h2>Satın almalar</h2>
+
+  <p>
+    Ödemeyi App Store yürütür. Mystica kartını hiç görmez ve uygulamada ödeme bilgisi isteyen
+    bir kod yoktur — ödeme ekranı Apple'ındır.
+  </p>
+
+  <p>
+    <strong>RevenueCat, App Store ile Mystica'nın defteri arasında durur.</strong> Aldıkları:
+  </p>
+
+  <ul>
+    <li>
+      <strong>Anonim Mystica kimliğin</strong>, bir satın almanın doğru deftere eşleşebilmesi
+      için. O olmasa bir ödeme kimseye yazılmazdı.
+    </li>
+    <li>
+      <strong>App Store işlemi</strong> — hangi ürün, ne zaman, deneme sürüyor mu, yenilendi mi
+      yoksa düştü mü. Mystica'nın sunucusu satın almanı telefonundan değil RevenueCat'ten
+      öğrenir; çünkü sunucuya "ödedim" diyebilen bir istemci, kendine kredi yazabilen bir
+      istemcidir.
+    </li>
+  </ul>
+
+  <p>
+    RevenueCat'in kendi yazılımı ayrıca cihaz ve uygulama meta verisi toplar. Bu, Mystica'nın
+    ayarladığı bir şey değil satıcının davranışıdır; kesin liste de buraya ancak onların
+    dokümanından okunduktan sonra girer, varsayılarak değil.
+  </p>
+
+  <h2>Silme</h2>
+
+  <ul>
+    <li><strong>Fotoğraflar</strong> sen istesen de istemesen de 30 gün sonra silinir.</li>
+    <li><strong>Sorular ve rüyalar</strong> sen istesen de istemesen de 30 gün sonra sunucudan silinir. Onlardan yazılmış fallar kalır.</li>
+    <li><strong>Uygulamayı silmek</strong> fotoğrafları ve saklanan adınla doğum bilgilerini kaldırır. Hesabı <strong>kaldırmaz</strong> — jeton Anahtar Zinciri'nde ve iOS onu tutar.</li>
+  </ul>
+
+  <p>Uygulamada, <em>Verilerin</em> altında iki denetim var.</p>
+
+  <h3>Fotoğraflarımı sil</h3>
+
+  <p>
+    Onları bu telefondan hemen kaldırır. Yerel ve anlık — hiç kopya tutmamış bir sunucuya
+    sorulacak bir şey yok. Fallarına dokunulmaz.
+  </p>
+
+  <h3>Hesabımı sil</h3>
+
+  <p>
+    Hesabı ve ona bağlı her şeyi kaldırır: her falı, sorduğun her soruyu ve kredi defterinin
+    tamamını. Dokunmadan önce bilmen gereken iki şey onunla birlikte gider:
+  </p>
+
+  <ul>
+    <li>
+      <strong>Harcanmamış kredilerin yok olur.</strong> Gerçek parayla alındılar ve geri
+      yükleneceği bir hesap kalmıyor. Giriş diye bir şey olmadığı için desteğin bulabileceği
+      bir şey de yok.
+    </li>
+    <li>
+      <strong>Alınıp da yazılamamış parayı kaydeden satırlar, sen içlerinden çıkarılarak
+      tutulur.</strong> Bir satın alma kredi olarak yazılamadıysa o bir borçtur ve kaydı kalır
+      — ama kimlik ve ödeme bilgisi önce temizlenir, yani satır <em>birine</em> borçlu
+      olunduğunu söyler, <em>kime</em> olduğunu değil.
+    </li>
+  </ul>
+
+  <p>
+    Silme yalnızca senin oturumundan çözülür. Hangi hesabın silineceğini söyleyen bir alan
+    hiçbir yerde yoktur, yani hiçbir istek bir başkasınınkine nişan alamaz.
+  </p>
+
+  <h2>Hassas malzeme, adıyla</h2>
+
+  <p>
+    Bir fincanın içinin fotoğrafı, ellerinin ve mutfak masanın fotoğrafıdır. El fotoğrafları,
+    bir kahve fincanının olmadığı biçimde biyometriye yakındır ve bazı ülkeler onları ne için
+    kullanıldığından bağımsız olarak özel nitelikli sayar.
+  </p>
+
+  <p>
+    Onları cihazda tutmanın gerekçesi bu: Mystica sana fincanını göstermek için fincanını
+    tutmak zorunda değil.
+  </p>
+
+  <h2>Fallar eğlence içindir</h2>
+
+  <p>
+    Her fal ekranı bunu yazar, ve burada da tekrarlanıyor çünkü metnin ne olduğuyla ilgili:
+    Mystica eğlence içindir. Tıbbi, hukuki ya da mali tavsiye değildir ve olayları önceden
+    bildirmez. Okuduğun bir şey seni endişelendiriyorsa, yardım etmeye ehil bir insanla konuş.
+  </p>
+
+  <h2>İletişim</h2>
+
+  <p>
+    <mark>SAYFA YAYINA ÇIKMADAN ÖNCE DOLDURULACAK.</mark> Bir gizlilik politikasının, okuyanın
+    gerçekten yazabileceği çalışan bir adrese ihtiyacı var; makul görünen bir adres uydurmak,
+    boşluğu görünür bırakmaktan kötüdür.
+  </p>
+
+  <div class="disclaimer">
+    <span>Yalnızca eğlence amaçlıdır</span>
+    <span>Taslak · 21 · 08 · 26</span>
+  </div>
+</div>
