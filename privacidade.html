@@ -1,0 +1,493 @@
+<title>Mystica Privacidade</title>
+<script>
+  // `text-transform: uppercase` takes its casing rules from the document language, and this
+  // page is wrapped in a skeleton whose <html> element it does not author. Set explicitly on
+  // every translation, not only the Turkish one: the bug is invisible until the language is
+  // the one that needs it, which is exactly how it shipped the first time.
+  document.documentElement.lang = "pt";
+</script>
+<style>
+  /* ── The plate ──────────────────────────────────────────────────────────
+     Taken from `app/Mystica/DesignSystem/Ink.swift` rather than invented, so
+     the page and the app are printed with the same two inks. Committed to one
+     visual world on purpose — this is Mystica's own sheet, and the app has no
+     light mode to match. Every colour is painted explicitly, so the page holds
+     whatever ground the host puts behind it.                                  */
+  :root {
+    --stock:        #17101B;  /* aubergine black — the paper */
+    --stock-raised: #1F1526;
+    --stock-wine:   #2A1A26;
+    --paper:        #E9DFC8;  /* bone */
+    --paper-shade:  #D8CBAF;
+    --ink1:         #FFA51E;  /* marigold — plate 1 */
+    --ink2:         #12E0C0;  /* acid teal — plate 2, used under 5% */
+    --hairline:     rgba(233, 223, 200, 0.22);
+
+    --display: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --body:    ui-serif, Charter, Georgia, "Times New Roman", serif;
+    --label:   ui-sans-serif, system-ui, "Helvetica Neue", sans-serif;
+
+    --measure: 34rem;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--stock);
+    color: var(--paper);
+    font-family: var(--body);
+    font-size: 1.0625rem;
+    line-height: 1.62;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .sheet {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 1.25rem 6rem;
+  }
+
+  /* ── Running head ─────────────────────────────────────────────────────
+     The app's `PressSlug`: a label on the left, a folio on the right, a rule
+     under both.                                                              */
+  .slug {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1.75rem 0 0.6rem;
+    border-bottom: 1px solid var(--hairline);
+    font-family: var(--label);
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink1);
+  }
+  .slug .folio { color: var(--paper-shade); opacity: 0.6; }
+  .slug a { color: var(--paper-shade); opacity: 0.75; text-decoration: none; }
+  .slug a:hover, .slug a:focus-visible { color: var(--ink2); opacity: 1; }
+
+  h1 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(2.75rem, 12vw, 4.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+    margin: 2.5rem 0 0;
+    color: var(--ink1);
+    /* The second plate, slightly out of registration. One flourish, once. */
+    text-shadow: 0.055em 0.055em 0 var(--ink2);
+  }
+
+  .standfirst {
+    margin: 1.5rem 0 0;
+    font-size: 1.1875rem;
+    line-height: 1.5;
+    color: var(--paper);
+  }
+
+  h2 {
+    font-family: var(--label);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink1);
+    margin: 3.5rem 0 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  h3 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.0625rem;
+    letter-spacing: -0.005em;
+    margin: 2rem 0 0;
+    color: var(--paper);
+  }
+
+  p, ul { margin: 0.9rem 0 0; }
+  ul { padding-left: 1.1rem; }
+  li { margin-top: 0.55rem; }
+  li::marker { color: var(--ink1); }
+
+  strong { color: var(--paper); font-weight: 700; }
+  em { color: var(--paper-shade); }
+
+  a { color: var(--ink2); text-underline-offset: 0.18em; }
+  a:focus-visible {
+    outline: 2px solid var(--ink2);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.85em;
+    color: var(--paper-shade);
+    background: var(--stock-raised);
+    padding: 0.1em 0.35em;
+    border-radius: 2px;
+  }
+
+  /* A pasted block: the one place the bone stock is the ground, as in the app. */
+  .pasted {
+    margin: 2rem 0 0;
+    padding: 1.15rem 1.25rem;
+    background: var(--stock-raised);
+    border-left: 3px solid var(--ink1);
+    border-radius: 2px;
+  }
+  .pasted p:first-child { margin-top: 0; }
+
+  .note {
+    margin: 2rem 0 0;
+    padding: 1.15rem 1.25rem;
+    background: var(--stock-wine);
+    border-radius: 2px;
+    font-size: 0.9375rem;
+    color: var(--paper-shade);
+  }
+  .note p:first-child { margin-top: 0; }
+  .note strong { color: var(--ink1); }
+
+  mark {
+    background: var(--ink1);
+    color: var(--stock);
+    font-family: var(--label);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 0.15em 0.4em;
+    border-radius: 2px;
+  }
+
+  .disclaimer {
+    margin-top: 4.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--hairline);
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--label);
+    font-size: 0.625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--paper-shade);
+    opacity: 0.55;
+  }
+
+  /* ── Printed ──────────────────────────────────────────────────────────
+     A privacy policy gets read by a lawyer, and a lawyer prints things. Two
+     fluoro inks on aubergine black is not a thing a printer can do, so on
+     paper it becomes what it is: a document.                                  */
+  @media print {
+    body { background: #fff; color: #111; font-size: 11pt; }
+    .sheet { max-width: none; padding: 0; }
+    h1 { color: #111; text-shadow: none; font-size: 28pt; }
+    h2 { color: #111; border-color: #999; }
+    h3 { color: #111; }
+    .slug { color: #444; border-color: #999; }
+    .pasted, .note { background: #f4f4f4; color: #111; border-left-color: #999; }
+    .note strong { color: #111; }
+    a { color: #111; }
+    .disclaimer { color: #666; opacity: 1; }
+    mark { background: #ffe9a8; color: #111; }
+  }
+</style>
+
+<div class="sheet">
+  <div class="slug">
+    <span>Mystica Press — Os teus dados</span>
+    <span class="folio"><a href="privacy.html">EN</a> · <a href="gizlilik.html">TR</a> · <a href="privacidad.html">ES</a> · <a href="privacidade.html">PT</a> · 05 · 09 · 26</span>
+  </div>
+
+  <h1>Privacidade</h1>
+
+  <p class="standfirst">
+    O que Mystica faz com aquilo que lhe dás, escrito a partir do código e não das intenções.
+    Onde algo é incómodo, di-lo em vez de arredondar a seu favor.
+  </p>
+
+  <div class="note">
+    <p>
+      <strong>Rascunho, a aguardar revisão jurídica.</strong> Cada afirmação de facto abaixo
+      foi verificada contra o código-fonte e a base de dados em funcionamento a 21 de agosto
+      de 2026, mas este documento ainda não foi lido por um advogado. É publicado para que o
+      possa ser — e para que a ligação na aplicação leve a algo verdadeiro em vez de a uma
+      página estacionada.
+    </p>
+  </div>
+
+  <h2>Não existe conta</h2>
+
+  <p>
+    Mystica nunca pede um endereço de e-mail, uma palavra-passe ou um número de telefone, e não
+    há ecrã de início de sessão. No primeiro arranque a aplicação inicia sessão anonimamente e
+    recebe um identificador aleatório. É a esse identificador que as tuas leituras e o teu
+    registo de créditos ficam ligados.
+  </p>
+
+  <p>
+    Vive num único sítio: o Porta-chaves do dispositivo, marcado de forma a <strong>não</strong>
+    ser sincronizado com o iCloud e a não poder ser lido antes de o telefone ter sido
+    desbloqueado uma vez.
+  </p>
+
+  <h3>Apagar a aplicação não apaga a tua conta</h3>
+
+  <p>
+    O iOS deixa os elementos do Porta-chaves no lugar quando uma aplicação é removida, por isso
+    o testemunho sobrevive à desinstalação e reinstalar retoma a mesma conta. Isto foi testado
+    em vez de presumido: a aplicação foi apagada, reinstalada, as perguntas foram respondidas
+    de novo, e devolveu a leitura idêntica que já dera nesse dia — o que só é possível se, para
+    o servidor, se tratar da mesma pessoa.
+  </p>
+
+  <p>Isso corta dos dois lados, e ambos merecem ser ditos com clareza.</p>
+
+  <ul>
+    <li><strong>Os teus créditos sobrevivem.</strong> Apaga a aplicação, reinstala-a mais tarde, e aquilo que pagaste continua lá.</li>
+    <li><strong>E tudo o resto também.</strong> Se apagares a aplicação para te veres livre de Mystica, não te viste livre dela. As tuas leituras e o teu registo continuam no servidor, e a aplicação reinstalada ainda lhes chega.</li>
+  </ul>
+
+  <p>
+    Se o que queres é desaparecer, usa <strong>Eliminar a minha conta</strong> em
+    <em>Os teus dados</em> antes de apagares a aplicação. Essa é real, e está descrita por
+    inteiro mais abaixo.
+  </p>
+
+  <h2>O que fica no teu telefone</h2>
+
+  <h3>As tuas fotografias da chávena e da mão</h3>
+
+  <p>
+    Um fotograma por leitura, guardado no diretório da própria aplicação, excluído das cópias
+    de segurança do dispositivo e apagado automaticamente ao fim de 30 dias.
+  </p>
+
+  <p>
+    São <strong>enviadas</strong> — é assim que uma leitura é escrita. Cada fotografia é
+    enviada para o servidor de Mystica, reencaminhada para o modelo no mesmo pedido, e não é
+    armazenada em nenhuma das pontas. Não há tabela nem contentor que guarde alguma. A cópia no
+    teu telefone é a única que persiste em qualquer lado.
+  </p>
+
+  <div class="pasted">
+    <p>
+      Uma versão anterior deste documento, e do ecrã na aplicação, dizia que as fotografias
+      <em>nunca eram enviadas</em>. Era falso, e falso na direção que importa:
+      enviado-e-descartado não é o mesmo que nunca-enviado.
+    </p>
+  </div>
+
+  <h3>O teu nome, dados de nascimento e respostas</h3>
+
+  <p>
+    Guardados num único ficheiro pequeno no diretório da própria aplicação, excluído das cópias
+    de segurança e ilegível até à primeira vez que desbloqueias o telefone depois de um
+    reinício. <strong>Nada sobre ti vai para uma tabela no servidor de Mystica</strong> — a que
+    foi construída para isso foi eliminada e não foi substituída.
+  </p>
+
+  <p>
+    O que é guardado é aquilo que escreveste: o teu nome, o dia, a hora e o lugar do teu
+    nascimento, e as tuas respostas sobre relação, foco, tom e pronomes. O momento do
+    nascimento é guardado como os números que introduziste — ano, mês, dia, hora, minuto — e
+    não como uma marca temporal, para que signifique o mesmo daqui a um ano e noutro país.
+  </p>
+
+  <p>
+    É <strong>enviado</strong> com cada leitura para que os planetas possam ser calculados, e
+    não é conservado do outro lado. Vai-se com a aplicação se apagares a aplicação.
+  </p>
+
+  <h2>O que o servidor de Mystica guarda</h2>
+
+  <p>O backend é um projeto Supabase na UE (Frankfurt, <code>eu-central-1</code>).</p>
+
+  <h3>As tuas leituras</h3>
+
+  <p>
+    O texto de cada leitura, o seu tipo, as cartas tiradas e a sua semente, em que língua foi
+    escrita, quando foi entregue e quando a abriste. Duas coisas lá dentro merecem ser sabidas
+    em vez de deduzidas:
+  </p>
+
+  <ul>
+    <li>
+      <strong>A pergunta que fizeste</strong>, nas tuas próprias palavras, exatamente como a
+      escreveste — e o sonho que redigiste, guardado da mesma maneira.
+    </li>
+    <li>
+      <strong>O teu primeiro nome, dentro do texto da leitura.</strong> As leituras são
+      escritas a dirigir-se a ti, por isso o modelo põe o teu nome na prosa, e essa prosa é
+      guardada. O teu nome está portanto no servidor apesar de Mystica não ter nenhuma tabela
+      de nomes e nunca te ter pedido para registares um.
+    </li>
+  </ul>
+
+  <h3>O que escreveste, e quando desaparece</h3>
+
+  <p>
+    O diário de sonhos é diferente em natureza de tudo o resto. Uma data de nascimento é um
+    facto. Uma fotografia é uma fotografia. Um sonho, escrito nos primeiros dez minutos de uma
+    manhã, é a coisa mais pessoal que Mystica guarda, e é o único sítio onde podes escrever
+    absolutamente qualquer coisa.
+  </p>
+
+  <p>
+    É guardado no servidor, ligado à leitura, porque a leitura foi escrita a partir dele.
+    <strong>É apagado ao fim de 30 dias</strong> — o mesmo prazo das fotografias, para que haja
+    um número e não dois. O apagamento corre como uma tarefa agendada na base de dados todas as
+    noites, e não como uma política que alguém tenha de lembrar, e é irreversível.
+  </p>
+
+  <p>
+    <strong>Um limite honesto.</strong> Uma boa leitura cita-te de volta — é em grande parte
+    por isso que não soa a horóscopo —, por isso uma leitura pode conter fragmentos daquilo que
+    escreveste, e esses ficam enquanto a leitura ficar. Apagá-los significaria destruir a
+    leitura, que é justamente aquilo que está a ser conservado. Se quiseres que ambos
+    desapareçam, <em>Eliminar a minha conta</em> remove também as leituras.
+  </p>
+
+  <h3>O teu registo de créditos</h3>
+
+  <p>
+    Cada compra e cada gasto, como uma lista à qual apenas se acrescenta. Existe para que um
+    saldo contestado possa ser explicado linha a linha, o que significa que é deliberadamente
+    nunca reescrito.
+  </p>
+
+  <h3>O que o servidor não guarda</h3>
+
+  <p>
+    A tua data, hora, lugar de nascimento ou coordenadas. As tuas fotografias. O teu e-mail —
+    nunca te pediu nenhum.
+  </p>
+
+  <h3>Eventos de utilização</h3>
+
+  <p>
+    A aplicação emite eventos como <code>reading_opened</code>. Hoje são impressos numa consola
+    de programação e <strong>não são enviados para lado nenhum</strong>; não há nenhum serviço
+    de analítica ligado. Se algum dia for ligado um, esta secção terá de dizer qual, o que
+    recebe e se pode ser desativado.
+  </p>
+
+  <h2>Compras</h2>
+
+  <p>
+    O pagamento é tratado pela App Store. Mystica nunca vê o teu cartão, e nenhum código da
+    aplicação pede dados de pagamento — a folha de pagamento é da Apple.
+  </p>
+
+  <p>
+    <strong>A RevenueCat fica entre a App Store e o registo de Mystica.</strong> O que recebe:
+  </p>
+
+  <ul>
+    <li>
+      <strong>O teu identificador anónimo de Mystica</strong>, para que uma compra possa ser
+      associada ao registo certo. Sem ele, um pagamento não creditaria ninguém.
+    </li>
+    <li>
+      <strong>A transação da App Store</strong> — que produto, quando, se há um período de
+      teste a decorrer, se renovou ou caducou. O servidor de Mystica fica a saber da tua compra
+      pela RevenueCat e não pelo teu telefone, porque um cliente que pode dizer ao servidor que
+      pagou é um cliente que pode atribuir créditos a si próprio.
+    </li>
+  </ul>
+
+  <p>
+    O software da própria RevenueCat também recolhe metadados do dispositivo e da aplicação por
+    rotina. Isso é comportamento do fornecedor e não algo que Mystica configure, e a lista
+    exata pertence aqui apenas depois de ser lida na documentação deles em vez de presumida.
+  </p>
+
+  <h2>Apagar coisas</h2>
+
+  <ul>
+    <li><strong>As fotografias</strong> são apagadas ao fim de 30 dias, quer peças quer não.</li>
+    <li><strong>As perguntas e os sonhos</strong> são apagados do servidor ao fim de 30 dias, quer peças quer não. As leituras escritas a partir deles permanecem.</li>
+    <li><strong>Apagar a aplicação</strong> remove as fotografias e o teu nome e dados de nascimento guardados. <strong>Não</strong> remove a conta — o testemunho está no Porta-chaves, que o iOS mantém.</li>
+  </ul>
+
+  <p>Dois controlos na aplicação, em <em>Os teus dados</em>.</p>
+
+  <h3>Eliminar as minhas fotografias</h3>
+
+  <p>
+    Remove-as deste telefone imediatamente. Local e instantâneo — não há nada a pedir a um
+    servidor que nunca guardou uma cópia. As tuas leituras ficam intactas.
+  </p>
+
+  <h3>Eliminar a minha conta</h3>
+
+  <p>
+    Remove a conta e tudo o que lhe está ligado: cada leitura, cada pergunta e o registo de
+    créditos inteiro. Duas coisas vão com ela que vale a pena saber antes de tocares:
+  </p>
+
+  <ul>
+    <li>
+      <strong>Os créditos por gastar são destruídos.</strong> Foram comprados com dinheiro real
+      e não resta nenhuma conta para os repor. Não há início de sessão, por isso também não há
+      nada que o apoio possa encontrar.
+    </li>
+    <li>
+      <strong>As linhas que registam dinheiro cobrado e não creditado são mantidas, contigo
+      removido delas.</strong> Se alguma compra chegou a falhar na atribuição, essa falha é uma
+      dívida e o registo dela fica — mas o identificador e os dados de pagamento são limpos
+      primeiro, de modo que a linha diz que <em>alguém</em> tem valor em dívida e não
+      <em>quem</em>.
+    </li>
+  </ul>
+
+  <p>
+    A eliminação é resolvida a partir da tua sessão e de mais nada. Não há nenhum campo em lado
+    nenhum que nomeie que conta apagar, por isso nenhum pedido pode ser apontado à de outra
+    pessoa.
+  </p>
+
+  <h2>Material sensível, chamado pelo nome</h2>
+
+  <p>
+    Fotografias do interior de uma chávena são fotografias das tuas mãos e da mesa da tua
+    cozinha. Fotografias da palma da mão são próximas do biométrico de uma forma que uma
+    chávena de café não é, e algumas jurisdições tratam-nas como categoria especial
+    independentemente do fim a que se destinam.
+  </p>
+
+  <p>
+    É esse o raciocínio por trás de as manter no dispositivo: para te mostrar a tua chávena,
+    Mystica não precisa de ficar com a tua chávena.
+  </p>
+
+  <h2>As leituras são entretenimento</h2>
+
+  <p>
+    Todos os ecrãs de leitura o dizem, e repete-se aqui porque diz respeito àquilo que o texto
+    é: Mystica é entretenimento. Não é aconselhamento médico, jurídico ou financeiro, e não
+    prevê acontecimentos. Se algo que leres aqui te preocupar, fala com uma pessoa qualificada
+    para ajudar.
+  </p>
+
+  <h2>Contacto</h2>
+
+  <p>
+    Mystica é oferecida por Kaan Bozkurt, que é o responsável pelos teus dados. Para qualquer
+    coisa relacionada com eles — pedir uma cópia, pedir uma correção, eliminar a tua conta e
+    tudo o que contém, ou simplesmente fazer uma pergunta — escreve para
+    <a href="mailto:21kaanbozkurt@gmail.com">21kaanbozkurt@gmail.com</a>.
+    Todos os pedidos são respondidos no prazo máximo de trinta dias.
+  </p>
+
+  <div class="disclaimer">
+    <span>Apenas para fins de entretenimento</span>
+    <span>05 · 09 · 26</span>
+  </div>
+</div>
